@@ -37,6 +37,11 @@ import Data.Text as T
 -- putDocType route router = do
 --   html <- router route
 --   pure $ "<!DOCTYPE html>" <> html
+
+-- staticRouterGen :: R BackendRoute -> Q BS.ByteString
+-- staticRouterGen = \case
+--   Landing :/ r -> staticRouter r
+--   _ -> undefined -- lmao literally... its TH
   
 -- far more generic 
 staticRouter :: R LandingRoute -> Q BS.ByteString
