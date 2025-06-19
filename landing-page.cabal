@@ -58,6 +58,7 @@ library
                  , http-client-tls
                  , http-types
                  , HaskellNet
+                 , lamarckian
                  , lens
                  , lifted-base
                  , lucid
