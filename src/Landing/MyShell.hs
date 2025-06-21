@@ -1,16 +1,11 @@
 module Landing.MyShell where
 
-
-import Lamarckian.Render
 import Lamarckian.Types
 import Common.Constants
-import Common.Route
 import Landing.Static -- Obelisk.Generated.Static
 
 import Reflex.Dom.Core
-import Language.Haskell.TH
 import Data.Text (Text) 
-import qualified Data.ByteString as BS
 
 type Href = Text
 
@@ -71,7 +66,7 @@ frontendHead = do
   preloadStyleLink "https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
   preloadStyleLink "https://fonts.gstatic.com"
 
-mainShell :: StaticWidget' FrontendRoute x () -> StaticWidget' FrontendRoute x ()
+mainShell :: StaticWidget' r x () -> StaticWidget' r x ()
 mainShell body = do
   elAttr "html" ("lang" =: "en") $ do
     el "head" $ do
@@ -80,7 +75,7 @@ mainShell body = do
     el "body" $ elClass "div" "fixed top-0 left-0 w-full h-full overflow-auto z-10 scroll-smooth" $ do  
       body  
 
-blogShell :: StaticWidget' FrontendRoute x () -> StaticWidget' FrontendRoute x ()
+blogShell :: StaticWidget' r x () -> StaticWidget' r x ()
 blogShell body = do
   elAttr "html" ("lang" =: "en") $ do
     el "head" $ do
@@ -89,5 +84,12 @@ blogShell body = do
     el "body" $ elClass "div" "fixed top-0 left-0 w-full h-full overflow-auto z-10 scroll-smooth" $ do  
       body
 
-renderInMainShell :: StaticWidget' FrontendRoute x () -> Q BS.ByteString
-renderInMainShell = runIO . runStaticWidget . mainShell
+
+-- renderInMainShell' :: StaticWidget' r x () -> Q (StaticWidget' r x ())
+-- renderInMainShell' = pure . mainShell
+
+-- renderInMainShell :: StaticWidget' r x () -> Q BS.ByteString
+-- renderInMainShell = runIO . runStaticWidget . mainShell
+
+-- renderInMainShellIO :: StaticWidget' r x () -> IO BS.ByteString
+-- renderInMainShellIO = runStaticWidget . mainShell

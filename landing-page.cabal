@@ -21,17 +21,12 @@ library
     exposed-modules:  Landing
                       Landing.Impl
                       Landing.MyShell
-                      Landing.Router
                       Landing.Utils
-                      Landing.Pages.AboutUs
-                      Landing.Pages.Base
-                      Landing.Pages.Elems
-                      Landing.Pages.FAQ
-                      Landing.Pages.Pricing
-                      Landing.Pages.For.Bootcamps
-                      Landing.Pages.For.Communities
-                      Landing.Pages.For.JobSeekers
-                      Landing.Pages.For.Recruiters
+                      -- Landing.Pages.AboutUs
+                      -- Landing.Pages.Base
+                      -- Landing.Pages.Elems
+                      Landing.Pages.ContactUsForm
+                      -- Landing.Pages.Pricing
     -- other-modules:
     -- other-extensions:
     build-depends: aeson
@@ -54,6 +49,7 @@ library
                  , exceptions
                  , extra
                  , filepath
+                 , file-embed
                  , http-client
                  , http-client-tls
                  , http-types
@@ -84,7 +80,7 @@ library
                  , psql-simple-beam
                  , psql-simple-class
                  , random
-                 , reflex-dom-core
+                 , reflex-dom
                  , rhyolite-common
                  , rhyolite-email
                  , scrappy-core

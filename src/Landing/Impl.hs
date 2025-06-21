@@ -2,41 +2,70 @@ module Landing.Impl where
 
 import Landing.Static
 import Lamarckian.Compiler
-import Landing.Router
 import Common.Route
 
 import Language.Haskell.TH
 import Obelisk.Route
 import System.FilePath
 
-getPageCompiled :: R LandingRoute -> Q Exp
-getPageCompiled route =
-  compileStaticSite site route
+import Lamarckian.Types
+
+type Compiler = Q
+
+atCompileTime :: a -> Compiler a
+atCompileTime = pure
+
+getPageCompiled :: R MainLandingRoute -> StaticWidget' MainLandingRoute t () -> Q Exp
+getPageCompiled route widget =
+  compileStaticSite site route widget
   where 
      site = StaticSite
+       -- NOTE: base folder ("staticSite") must match a static assets dir
        { _staticSite_baseFilePath = "staticSite" </> "src" </> "html"
        -- TODO: split up head and body... OF THE DOM I MEAN!!
-       , _staticSite_router = staticRouter
+       --, _staticSite_router = staticRouter'
        , _staticSite_getFromFile = staticFilePath
-       , _staticSite_routeEncoder = \r -> renderBackendRoute checkedFullRouteEncoder $ Landing :/ r
+       , _staticSite_routeEncoder = \r -> renderBackendRoute checkedFullRouteEncoder $ LandingR :/ r
        }
+
+
+getMainPageCompiled :: R BackendRoute -> StaticWidget' BackendRoute t () -> Q Exp
+getMainPageCompiled route widget =
+  compileStaticSite site route widget
+  where 
+     site = StaticSite
+       -- NOTE: base folder ("staticSite") must match a static assets dir
+       { _staticSite_baseFilePath = "staticSite" </> "src" </> "html"
+       -- TODO: split up head and body... OF THE DOM I MEAN!!
+       --, _staticSite_router = staticRouter'
+       , _staticSite_getFromFile = staticFilePath
+       , _staticSite_routeEncoder = renderBackendRoute checkedFullRouteEncoder
+       }
+
+
+-- getPageCompiled :: R MainLandingRoute -> Q Exp
+-- getPageCompiled route =
+--   compileStaticSite site route
+--   where 
+--      site = StaticSite
+--        -- NOTE: base folder ("staticSite") must match a static assets dir
+--        { _staticSite_baseFilePath = "staticSite" </> "src" </> "html"
+--        -- TODO: split up head and body... OF THE DOM I MEAN!!
+--        , _staticSite_router = staticRouter'
+--        , _staticSite_getFromFile = staticFilePath
+--        , _staticSite_routeEncoder = \r -> renderBackendRoute checkedFullRouteEncoder $ LandingR :/ r
+--        }
      
-     -- staticRouter
-     -- staticFilePath
-     -- (\r -> renderBackendRoute checkedFullRouteEncoder $ Landing :/ r)
-     -- $ route
-
-
--- TODO: currently this gives all power to staticRouter to set the head
--- it would be nice to abstract an interface like this
-
--- runStaticSite :: StaticSite t route -> R route -> Q Exp
-
--- data StaticSite t route = StaticSite
---   { staticDir :: FilePath
---   , frontendHead :: R route -> StaticWidget' t ()
---   , frontendBody :: R route -> StaticWidget' t ()
----  maybe more:
---   , snapOptions :: OptionsSnap 
---   }
+-- getPageCompiled' :: StaticWidget' r t () -> Q Exp
+-- getPageCompiled' route =
+--   compileStaticSite site page
+--   where 
+--      site = StaticSite
+--        -- NOTE: base folder ("staticSite") must match a static assets dir
+--        { _staticSite_baseFilePath = "staticSite" </> "src" </> "html"
+--        -- TODO: split up head and body... OF THE DOM I MEAN!!
+--        , _staticSite_router = page --staticRouter'
+--        , _staticSite_getFromFile = staticFilePath
+--        , _staticSite_routeEncoder = \r -> renderBackendRoute checkedFullRouteEncoder $ LandingR :/ r
+--        }
 
