@@ -42,23 +42,24 @@ serveStaticSite = \case
     Recruiters :/ () -> serveCompressedWithReport $(getPageCompiled (SolutionFor :/ Recruiters :/ ()))
     Communities :/ () ->  serveCompressedWithReport $(getPageCompiled (SolutionFor :/ Communities :/ ()))
     JobSeekers :/ () -> serveCompressedWithReport $(getPageCompiled (SolutionFor :/ JobSeekers :/ ()))
-  
-  Blog :/ blogRoute -> case blogRoute of
-    BlogMain :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ BlogMain :/ ()))
-    README :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ README :/ ())) 
-    SetupInstructions :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ SetupInstructions :/ ())) 
-    Introduction :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Introduction :/ ()))
-    FirstProgram :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ FirstProgram :/ ()))
-    Chapter0 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter0 :/ ()))
-    Chapter1 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter1 :/ ()))
-    Chapter2 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter2 :/ ())) 
-    Chapter3 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter3 :/ ()))
-    Chapter4 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter4 :/ ()))
-    Chapter5 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter5 :/ ()))
-    Chapter6 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter6 :/ ()))
-    Chapter7 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter7 :/ ()))
-    Chapter8 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter8 :/ ()))
-    Chapter9 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter9 :/ ()))
+
+  Blog :/ _ -> pure ()
+  -- Blog :/ blogRoute -> case blogRoute of
+  --   BlogMain :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ BlogMain :/ ()))
+  --   README :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ README :/ ())) 
+  --   SetupInstructions :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ SetupInstructions :/ ())) 
+  --   Introduction :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Introduction :/ ()))
+  --   FirstProgram :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ FirstProgram :/ ()))
+  --   Chapter0 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter0 :/ ()))
+  --   Chapter1 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter1 :/ ()))
+  --   Chapter2 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter2 :/ ())) 
+  --   Chapter3 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter3 :/ ()))
+  --   Chapter4 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter4 :/ ()))
+  --   Chapter5 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter5 :/ ()))
+  --   Chapter6 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter6 :/ ()))
+  --   Chapter7 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter7 :/ ()))
+  --   Chapter8 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter8 :/ ()))
+  --   Chapter9 :/ () -> serveCompressedWithReport $(getPageCompiled (Blog :/ Chapter9 :/ ()))
 
 
 serveCompressed :: MonadSnap m => FilePath -> EnvT m T.Text

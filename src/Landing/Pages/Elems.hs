@@ -2,6 +2,9 @@
 
 module Landing.Pages.Elems where
 
+import System.IO.Unsafe
+import Control.Exception
+
 import Landing.Utils
 import Lamarckian.JS
 import Lamarckian.Types
@@ -87,14 +90,18 @@ aceTalentLandingHeader = mdo
     [ rolesWePlace
     , blogHighlights
     , blank
+    --, pure ()
     ]
   pure $ JSFunc clear
 
 
 -- Note: this should only ever be used in a static dom builder Template Haskell context 
 has3 :: [JSFunc] -> (JSFunc,JSFunc,JSFunc)
-has3 (x_:y_:z_:_) = (x_,y_,z_)
-has3 _ = error "incorrect number of dom setters"
+has3 (x_:y_:z_:[]) = (x_,y_,z_)
+has3 _ = do
+  unsafePerformIO $ do
+    appendFile "exception.txt" "EXCEPTION"
+    error "incorrect number of dom setters"
 
 aceTalentLandingFooter :: DomBuilder t m => m ()
 aceTalentLandingFooter = do

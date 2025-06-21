@@ -14,9 +14,10 @@ getPageCompiled route =
   compileStaticSite site route
   where 
      site = StaticSite
+       -- NOTE: base folder ("staticSite") must match a static assets dir
        { _staticSite_baseFilePath = "staticSite" </> "src" </> "html"
        -- TODO: split up head and body... OF THE DOM I MEAN!!
-       , _staticSite_router = staticRouter
+       , _staticSite_router = staticRouter'
        , _staticSite_getFromFile = staticFilePath
        , _staticSite_routeEncoder = \r -> renderBackendRoute checkedFullRouteEncoder $ Landing :/ r
        }

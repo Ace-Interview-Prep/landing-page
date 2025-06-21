@@ -2,6 +2,8 @@
 
 module Landing.Pages.Base where 
 
+import Language.Haskell.TH
+
 import Landing.Pages.Elems 
 import Common.Constants
 import qualified Common.Elems
@@ -22,6 +24,7 @@ import qualified Data.Text as T
 import Classh as C
 import Classh.Reflex as C
 
+
 -- "width-8"
 -- "w-8"
 
@@ -35,11 +38,22 @@ myNumber = $( [| 1 + 1 |] )
 --   id_ :: a -> a 
 --- $(createMyClass)
 
+-- | Setting for faster hot reloading
+-- relateSourceTree :: Tree SourceFilePath -> Tree HtmlFilePath
+-- relateSourceTree = undefined
+
+showSourceFile :: Q Exp
+showSourceFile = do
+  loc <- location
+  let file = loc_filename loc
+  [| file |]
+
+
 aceTalentBanner :: DomBuilder t m => m ()
 aceTalentBanner = do
   elClass "div" $(classh' [px .|~ [(TWSize 20),(TWSize 28)], py .|~ [(TWSize 0),(TWSize 36)], bgColor .~~ aceLightBlue ]) $ do
     gridCol Col12 $ do
-      col [12,12,8,8] $ do
+      col [12,12,8,8] $ do 
         row [y .~~ TWSize 10, t .~~ TWSize 20] $ do
           row [] $ do
             bannerTextBlue' "Exceptional "
